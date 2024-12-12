@@ -6,23 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.writer.util.ClassLabel;
 import org.writer.util.FieldMark;
+import java.util.List;
 
 @Data
 @Builder
 @ClassLabel
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class Scores {
 
     @FieldMark
-    private int place;
-
-    @FieldMark
-    private String firstName;
-
-    @FieldMark
-    private String lastName;
-
-    @FieldMark
-    private double score;
+    private List<Integer> scores;
 }
