@@ -2,8 +2,12 @@ package org.writer;
 
 import lombok.SneakyThrows;
 import org.writer.model.Person;
+import org.writer.service.CSVParser;
 import org.writer.service.ClassManipulator;
 import org.writer.service.Manipulator;
+import org.writer.service.Writable;
+import org.writer.service.WritableImpl;
+import org.writer.util.Adapter;
 import org.writer.util.ClassLabel;
 import java.time.LocalDate;
 import java.util.List;
@@ -30,5 +34,8 @@ public class Main {
                 (ClassLabel) Class.forName("ClassLabel").getDeclaredConstructor().newInstance()), person1);
 
 
+        Adapter adapter = new Adapter();
+        Writable writable = new WritableImpl();
+        CSVParser csvParser = new CSVParser<>(adapter, writable);
     }
 }

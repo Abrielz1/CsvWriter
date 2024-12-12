@@ -12,10 +12,10 @@ public class CSVParser<T> {
 
     private final Writable writable;
 
-    public void createCSV(T t) {
+    public void createCSV(T t, String fileName) {
 
 
-        writable.writeToFile(new ArrayList<>(), "");
+        writable.writeToFile(new ArrayList<>(), fileName);
     }
 }
 
