@@ -31,11 +31,11 @@ public class Main {
         Manipulator manipulator = new Manipulator<>();
 
       manipulator.manipulate(classManipulator.classScanner("org.writer.model",
-                (ClassLabel) Class.forName("ClassLabel").getDeclaredConstructor().newInstance()), person1);
+                ClassLabel.class), person1);
 
 
         Adapter adapter = new Adapter();
         Writable writable = new WritableImpl();
-        CSVParser csvParser = new CSVParser<>(adapter, writable);
+      //  CSVParser csvParser = new CSVParser<>(adapter, writable);
     }
 }
