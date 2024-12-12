@@ -1,5 +1,6 @@
 package org.writer.service;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.writer.util.ClassLabel;
 
 import java.lang.annotation.Annotation;
@@ -15,12 +16,12 @@ public class Manipulator<T> {
 
         for (Class<?> getClass : classes) {
             Class clasz = getClass;
-            if (clasz.getDeclaredAnnotations().length > 0 && clasz.isAnnotationPresent(ClassLabel.class)) {
 
-                Annotation[] annotatedFields = clasz.getDeclaredAnnotations();
+           var fields = clasz.getDeclaredFields();
 
-                System.out.println("Annotation[] " + Arrays.toString(annotatedFields));
-            }
+            System.out.println("Fields[]: " + fields);
+
+            System.out.println("Field: " + fields[0]);
 
         }
 
