@@ -56,18 +56,18 @@ public class CSVParser<T> {
                 }
 
 
-                    sb.append(this.extractor(result, temp, entity, age)).append(";");
+                sb.append(this.extractor(result, temp, entity, age)).append(";");
 
-                    sb.append(this.extractor(result, temp, entity, firstName)).append(";");
+                sb.append(this.extractor(result, temp, entity, firstName)).append(";");
 
-                    sb.append(this.extractor(result, temp, entity, lastName)).append(";");
+                sb.append(this.extractor(result, temp, entity, lastName)).append(";");
 
-                    sb.append(this.extractor(result, temp, entity, dateOfBirth)).append(";");
+                sb.append(this.extractor(result, temp, entity, dateOfBirth)).append(";");
 
                 head = this.manipulator(sb.toString());
                 writable.writeToFile(result, head, entity.getClass().getSimpleName());
                 result.clear();
-                sb.delete(0 ,sb.length() - 1);
+                sb.delete(0, sb.length() - 1);
             }
 
             if (entity.getClass().getSimpleName().equals("Student")) {
@@ -100,18 +100,25 @@ public class CSVParser<T> {
 
                 head = sb.toString();
 
-                System.out.println("Head " + head);
-
                 writable.writeToFile(result, head, entity.getClass().getSimpleName());
                 result.clear();
-                sb.delete(0 ,sb.length() - 1);
+                sb.delete(0, sb.length() - 1);
             }
 
             if (entity.getClass().getSimpleName().equals("Scores")) {
+                Field scores = null;
+                temp = map.get(entity.getClass().getSimpleName());
+                try {
+                    scores = Scores.class.getDeclaredField("scores");
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
 
-                Scores scores = (Scores) entity;
-                System.out.println("scores: " + scores);
-                writable.writeToFile(result, head, entity.getClass().getSimpleName());
+                sb.append(this.extractor(result, temp, entity, scores)).append(";");
+
+            writable.writeToFile(result, head, entity.getClass().getSimpleName());
+            result.clear();
+            sb.delete(0, sb.length() - 1);
             }
         }
     }
@@ -152,7 +159,7 @@ public class CSVParser<T> {
 
         for (String iter : strings) {
             if (!iter.isBlank()) {
-               res.append(iter).append(";");
+                res.append(iter).append(";");
             }
         }
 

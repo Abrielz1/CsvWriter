@@ -2,6 +2,7 @@ package org.writer;
 
 import lombok.SneakyThrows;
 import org.writer.model.Person;
+import org.writer.model.Scores;
 import org.writer.model.Student;
 import org.writer.service.CSVParser;
 import org.writer.service.ClassManipulator;
@@ -10,16 +11,20 @@ import org.writer.service.Writable;
 import org.writer.service.WritableImpl;
 import org.writer.util.Adapter;
 import org.writer.util.ClassLabel;
-import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Main {
 
 
     @SneakyThrows
     public static void main(String[] args) {
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(3);
+        list.add(3);
 
         Person person1 = Person
                          .builder()
@@ -37,9 +42,14 @@ public class Main {
                 .score(25.9d)
                 .build();
 
+        Scores scores1 = Scores
+                .builder()
+                .scores(list)
+                .build();
+
         ClassManipulator classManipulator = new ClassManipulator();
 
-        Manipulator manipulator = new Manipulator<>();
+        Manipulator<Object> manipulator = new Manipulator<>();
 
      var res = manipulator.manipulate(classManipulator.classScanner("org.writer.model",
                 ClassLabel.class));
@@ -48,6 +58,6 @@ public class Main {
         Adapter adapter = new Adapter();
         Writable writable = new WritableImpl();
         CSVParser csvParser = new CSVParser<>(writable, adapter);
-        csvParser.createCSV(res, List.of(person1, student1));
+        csvParser.createCSV(res, List.of(person1, student1, scores1));
     }
 }

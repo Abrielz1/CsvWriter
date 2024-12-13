@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Builder
-//@ClassLabel
+@ClassLabel
 @NoArgsConstructor
 @AllArgsConstructor
 public class Scores {
