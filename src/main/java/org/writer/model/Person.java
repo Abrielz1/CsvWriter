@@ -30,6 +30,6 @@ public class Person {
     @FieldMark
     private String lastName;
 
-  //  @FieldMark
+    @FieldMark
     private LocalDate dateOfBirth;
 }

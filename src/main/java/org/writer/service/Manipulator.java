@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Manipulator<T> {
 
-    public Map<String, List<Field>> manipulate(List<Class<?>> classes, T t) {
+    public Map<String, List<Field>> manipulate(List<Class<?>> classes) {
 
        Map<String, List<Field>> result = new HashMap<>();
 
@@ -17,7 +17,6 @@ public class Manipulator<T> {
             Class<?> clasz = getClass;
 
              result.put(clasz.getSimpleName(), FieldUtils.getFieldsListWithAnnotation(getClass, FieldMark.class));
-
         }
 
         return result;

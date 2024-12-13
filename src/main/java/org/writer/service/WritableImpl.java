@@ -25,7 +25,6 @@ public class WritableImpl implements Writable {
         try(FileWriter writer = new FileWriter(fileName != null && !fileName.isBlank() ?
 
                                                                                  PATH + fileName + END : PATH + FILE)) {
-            System.out.println("begin");
 
             writer.write(head);
             writer.append(System.lineSeparator());
@@ -36,7 +35,6 @@ public class WritableImpl implements Writable {
 
             writer.append(System.lineSeparator());
 
-            System.out.println("done!");
         } catch (IOException error) {
             error.printStackTrace();
         }

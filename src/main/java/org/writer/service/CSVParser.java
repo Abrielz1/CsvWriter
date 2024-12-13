@@ -5,6 +5,7 @@ import org.writer.model.Person;
 import org.writer.model.Scores;
 import org.writer.model.Student;
 import org.writer.util.Adapter;
+
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,8 +36,6 @@ public class CSVParser<T> {
 
             StringBuilder sb = new StringBuilder();
 
-            System.out.println("Class " + entity.getClass());
-
             if (entity.getClass().getSimpleName().equals("Person")) {
 
                 Field age = null;
@@ -57,18 +56,16 @@ public class CSVParser<T> {
                     e.printStackTrace();
                 }
 
-                sb.append(this.extractor(result, temp, entity, age)).append(";");
 
-                sb.append(this.extractor(result, temp, entity, firstName)).append(";");
+                    sb.append(this.extractor(result, temp, entity, age)).append(";");
 
-                sb.append(this.extractor(result, temp, entity, lastName)).append(";");
+                    sb.append(this.extractor(result, temp, entity, firstName)).append(";");
 
-                sb.append(this.extractor(result, temp, entity, dateOfBirth)).append(";");
+                    sb.append(this.extractor(result, temp, entity, lastName)).append(";");
 
-                System.out.println("toFile!");
-                head = sb.toString();
-                System.out.println();
-                System.out.println("Head: " + head);
+                    sb.append(this.extractor(result, temp, entity, dateOfBirth)).append(";");
+
+                head = this.manipulator(sb.toString());
                 writable.writeToFile(result, head, entity.getClass().getSimpleName());
             }
 
@@ -88,23 +85,21 @@ public class CSVParser<T> {
         }
     }
 
-    private String extractor(List<String> result, List<Field> temp, T entity, Field age) {
+    private String extractor(List<String> result, List<Field> temp, T entity, Field currentField) {
 
         String nameField = "";
 
-        if (temp.contains(age)) {
-            Field field = temp.get(temp.indexOf(age));
+        if (temp.contains(currentField)) {
+            Field field = temp.get(temp.indexOf(currentField));
             Object value = null;
             field.setAccessible(true);
 
             try {
                 value = field.get(entity);
                 nameField = field.getName();
-                System.out.println("Type: " + field.getType().getName());
-                System.out.println("Type: " + field.getType().getSimpleName());
 
                 if (field.get(entity).getClass().getSimpleName().equals("LocalDate")) {
-                   value = adapter.dateOfBirthConverter((LocalDate) value);
+                    value = adapter.dateOfBirthConverter((LocalDate) value);
                 }
 
             } catch (IllegalAccessException e) {
@@ -117,5 +112,19 @@ public class CSVParser<T> {
         }
 
         return nameField;
+    }
+
+    private String manipulator(String str) {
+
+        StringBuilder res = new StringBuilder();
+        String[] strings = str.split("\\;");
+
+        for (String iter : strings) {
+            if (!iter.isBlank()) {
+               res.append(iter).append(";");
+            }
+        }
+
+        return res.toString();
     }
 }

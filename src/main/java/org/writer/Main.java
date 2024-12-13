@@ -9,7 +9,6 @@ import org.writer.service.Writable;
 import org.writer.service.WritableImpl;
 import org.writer.util.Adapter;
 import org.writer.util.ClassLabel;
-
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.List;
@@ -34,7 +33,7 @@ public class Main {
         Manipulator manipulator = new Manipulator<>();
 
      var res = manipulator.manipulate(classManipulator.classScanner("org.writer.model",
-                ClassLabel.class), person1);
+                ClassLabel.class));
 
 
         Adapter adapter = new Adapter();
