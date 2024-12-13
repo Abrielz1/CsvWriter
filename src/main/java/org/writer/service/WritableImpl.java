@@ -15,7 +15,7 @@ public class WritableImpl implements Writable {
     private static final String FILE = "data.csv";
 
     @Override
-    public void writeToFile(List<?> data, String fileName) {
+    public void writeToFile(List<?> data, String head, String fileName) {
 
         if (data == null || data.isEmpty()) {
 
@@ -26,9 +26,15 @@ public class WritableImpl implements Writable {
 
                                                                                  PATH + fileName + END : PATH + FILE)) {
             System.out.println("begin");
+
+            writer.write(head);
+            writer.append(System.lineSeparator());
+
             for (Object i : data) {
-                writer.write(i + System.lineSeparator());
+                writer.append(i.toString()).append(";");
             }
+
+            writer.append(System.lineSeparator());
 
             System.out.println("done!");
         } catch (IOException error) {

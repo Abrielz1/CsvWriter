@@ -39,7 +39,7 @@ public class Main {
 
         Adapter adapter = new Adapter();
         Writable writable = new WritableImpl();
-        CSVParser csvParser = new CSVParser<>(writable);
+        CSVParser csvParser = new CSVParser<>(writable, adapter);
         csvParser.createCSV(res, List.of(person1));
     }
 }

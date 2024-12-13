@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.writer.model.Person;
 import org.writer.model.Scores;
 import org.writer.model.Student;
+import org.writer.util.Adapter;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,8 @@ import java.util.Map;
 public class CSVParser<T> {
 
     private final Writable writable;
+
+    private final Adapter adapter;
 
     public void createCSV(Map<String, List<Field>> map, List<T> entities) {
 
@@ -27,16 +31,21 @@ public class CSVParser<T> {
 
         for (T entity : entities) {
 
+            String head = "";
+
+            StringBuilder sb = new StringBuilder();
+
             System.out.println("Class " + entity.getClass());
 
             if (entity.getClass().getSimpleName().equals("Person")) {
 
-                Field age;
-                Field firstName;
-                Field lastName;
-                Field dateOfBirth;
+                Field age = null;
+                Field firstName = null;
+                Field lastName = null;
+                Field dateOfBirth = null;
 
                 temp = map.get(entity.getClass().getSimpleName());
+
                 try {
 
                     age = Person.class.getDeclaredField("age");
@@ -45,37 +54,43 @@ public class CSVParser<T> {
                     dateOfBirth = Person.class.getDeclaredField("dateOfBirth");
 
                 } catch (NoSuchFieldException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
 
-                this.extractor(result, temp, entity, age);
+                sb.append(this.extractor(result, temp, entity, age)).append(";");
 
-                this.extractor(result, temp, entity, firstName);
+                sb.append(this.extractor(result, temp, entity, firstName)).append(";");
 
-                this.extractor(result, temp, entity, lastName);
+                sb.append(this.extractor(result, temp, entity, lastName)).append(";");
 
-                this.extractor(result, temp, entity, dateOfBirth);
+                sb.append(this.extractor(result, temp, entity, dateOfBirth)).append(";");
+
+                System.out.println("toFile!");
+                head = sb.toString();
+                System.out.println();
+                System.out.println("Head: " + head);
+                writable.writeToFile(result, head, entity.getClass().getSimpleName());
             }
 
             if (entity.getClass().getSimpleName().equals("Student")) {
 
                 Student student = (Student) entity;
                 System.out.println("student: " + student);
+                writable.writeToFile(result, head, entity.getClass().getSimpleName());
             }
 
             if (entity.getClass().getSimpleName().equals("Scores")) {
 
                 Scores scores = (Scores) entity;
                 System.out.println("scores: " + scores);
+                writable.writeToFile(result, head, entity.getClass().getSimpleName());
             }
-
-
-            System.out.println("toFile!");
-            writable.writeToFile(result, "" + entity.getClass().getSimpleName());
         }
     }
 
-    private void extractor(List<String> result, List<Field> temp, T o, Field age) {
+    private String extractor(List<String> result, List<Field> temp, T entity, Field age) {
+
+        String nameField = "";
 
         if (temp.contains(age)) {
             Field field = temp.get(temp.indexOf(age));
@@ -83,14 +98,24 @@ public class CSVParser<T> {
             field.setAccessible(true);
 
             try {
-                value = field.get(o);
+                value = field.get(entity);
+                nameField = field.getName();
                 System.out.println("Type: " + field.getType().getName());
                 System.out.println("Type: " + field.getType().getSimpleName());
+
+                if (field.get(entity).getClass().getSimpleName().equals("LocalDate")) {
+                   value = adapter.dateOfBirthConverter((LocalDate) value);
+                }
+
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
 
             result.add(String.valueOf(value));
+
+            return nameField;
         }
+
+        return nameField;
     }
 }
