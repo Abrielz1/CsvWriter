@@ -116,6 +116,8 @@ public class CSVParser<T> {
 
                 sb.append(this.extractor(result, temp, entity, scores)).append(";");
 
+                head = sb.toString();
+
             writable.writeToFile(result, head, entity.getClass().getSimpleName());
             result.clear();
             sb.delete(0, sb.length() - 1);
@@ -126,6 +128,7 @@ public class CSVParser<T> {
     private String extractor(List<String> result, List<Field> temp, T entity, Field currentField) {
 
         String nameField = "";
+        StringBuilder sb = new StringBuilder();
 
         if (temp.contains(currentField)) {
             Field field = temp.get(temp.indexOf(currentField));
@@ -138,6 +141,18 @@ public class CSVParser<T> {
 
                 if (field.get(entity).getClass().getSimpleName().equals("LocalDate")) {
                     value = adapter.dateOfBirthConverter((LocalDate) value);
+                }
+
+                if (field.get(entity).getClass().getSimpleName().equals("ArrayList")) {
+
+                   nameField = field.getName();
+                   List<Integer> list = (List<Integer>) value;
+
+                    for (Integer integer : list) {
+                        sb.append(integer).append(System.lineSeparator());
+                    }
+                    result.add(sb.toString());
+                    return nameField;
                 }
 
             } catch (IllegalAccessException e) {

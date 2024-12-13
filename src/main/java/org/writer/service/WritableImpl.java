@@ -30,6 +30,7 @@ public class WritableImpl implements Writable {
             writer.append(System.lineSeparator());
 
             for (Object i : data) {
+
                 writer.append(i.toString()).append(";");
             }
 
