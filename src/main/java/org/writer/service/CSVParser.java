@@ -5,7 +5,6 @@ import org.writer.model.Person;
 import org.writer.model.Scores;
 import org.writer.model.Student;
 import org.writer.util.Adapter;
-
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class CSVParser<T> {
     public void createCSV(Map<String, List<Field>> map, List<T> entities) {
 
         List<String> result = new ArrayList<>();
-        List<Field> temp = new ArrayList<>();
+        List<Field> temp;
 
         if ((entities == null || entities.isEmpty())
                 && (map == null || map.isEmpty())) {
@@ -67,13 +66,45 @@ public class CSVParser<T> {
 
                 head = this.manipulator(sb.toString());
                 writable.writeToFile(result, head, entity.getClass().getSimpleName());
+                result.clear();
+                sb.delete(0 ,sb.length() - 1);
             }
 
             if (entity.getClass().getSimpleName().equals("Student")) {
 
-                Student student = (Student) entity;
-                System.out.println("student: " + student);
+                Field place = null;
+                Field firstName = null;
+                Field lastName = null;
+                Field score = null;
+
+                temp = map.get(entity.getClass().getSimpleName());
+
+                try {
+
+                    place = Student.class.getDeclaredField("place");
+                    firstName = Student.class.getDeclaredField("firstName");
+                    lastName = Student.class.getDeclaredField("lastName");
+                    score = Student.class.getDeclaredField("score");
+
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+
+                sb.append(this.extractor(result, temp, entity, place)).append(";");
+
+                sb.append(this.extractor(result, temp, entity, firstName)).append(";");
+
+                sb.append(this.extractor(result, temp, entity, lastName)).append(";");
+
+                sb.append(this.extractor(result, temp, entity, score)).append(";");
+
+                head = sb.toString();
+
+                System.out.println("Head " + head);
+
                 writable.writeToFile(result, head, entity.getClass().getSimpleName());
+                result.clear();
+                sb.delete(0 ,sb.length() - 1);
             }
 
             if (entity.getClass().getSimpleName().equals("Scores")) {

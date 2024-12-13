@@ -2,6 +2,7 @@ package org.writer;
 
 import lombok.SneakyThrows;
 import org.writer.model.Person;
+import org.writer.model.Student;
 import org.writer.service.CSVParser;
 import org.writer.service.ClassManipulator;
 import org.writer.service.Manipulator;
@@ -28,6 +29,14 @@ public class Main {
                 .dateOfBirth(LocalDate.now().minusYears(15))
                 .build();
 
+        Student student1 = Student
+                .builder()
+                .place(1)
+                .firstName("name")
+                .lastName("surename")
+                .score(25.9d)
+                .build();
+
         ClassManipulator classManipulator = new ClassManipulator();
 
         Manipulator manipulator = new Manipulator<>();
@@ -39,6 +48,6 @@ public class Main {
         Adapter adapter = new Adapter();
         Writable writable = new WritableImpl();
         CSVParser csvParser = new CSVParser<>(writable, adapter);
-        csvParser.createCSV(res, List.of(person1));
+        csvParser.createCSV(res, List.of(person1, student1));
     }
 }

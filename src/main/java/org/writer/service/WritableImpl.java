@@ -34,6 +34,7 @@ public class WritableImpl implements Writable {
             }
 
             writer.append(System.lineSeparator());
+            writer.flush();
 
         } catch (IOException error) {
             error.printStackTrace();
