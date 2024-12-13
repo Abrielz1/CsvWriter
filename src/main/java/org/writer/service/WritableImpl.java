@@ -10,6 +10,8 @@ public class WritableImpl implements Writable {
 
     private static final String PATH = "output/";
 
+    private static final String END = ".csv";
+
     private static final String FILE = "data.csv";
 
     @Override
@@ -22,7 +24,7 @@ public class WritableImpl implements Writable {
 
         try(FileWriter writer = new FileWriter(fileName != null && !fileName.isBlank() ?
 
-                                                                                 PATH + fileName : PATH + FILE)) {
+                                                                                 PATH + fileName + END : PATH + FILE)) {
             System.out.println("begin");
             for (Object i : data) {
                 writer.write(i + System.lineSeparator());
