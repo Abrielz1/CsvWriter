@@ -8,7 +8,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WritableImpl implements Writable {
 
-    public static final String PATH = "output/data.csv";
+    private static final String PATH = "output/";
+
+    private static final String FILE = "data.csv";
 
     @Override
     public void writeToFile(List<?> data, String fileName) {
@@ -19,12 +21,14 @@ public class WritableImpl implements Writable {
         }
 
         try(FileWriter writer = new FileWriter(fileName != null && !fileName.isBlank() ?
-                                                                                  fileName : PATH)) {
 
+                                                                                 PATH + fileName : PATH + FILE)) {
+            System.out.println("begin");
             for (Object i : data) {
                 writer.write(i + System.lineSeparator());
             }
 
+            System.out.println("done!");
         } catch (IOException error) {
             error.printStackTrace();
         }

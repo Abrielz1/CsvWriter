@@ -1,30 +1,25 @@
 package org.writer.service;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
-import org.writer.util.ClassLabel;
-
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.writer.util.FieldMark;
+import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Manipulator<T> {
 
-    public List<T> manipulate(List<Class<?>> classes, T t) {
+    public Map<String, List<Field>> manipulate(List<Class<?>> classes, T t) {
 
-        List<T> clasList = new ArrayList<>();
+       Map<String, List<Field>> result = new HashMap<>();
 
         for (Class<?> getClass : classes) {
-            Class clasz = getClass;
+            Class<?> clasz = getClass;
 
-           var fields = clasz.getDeclaredFields();
-
-            System.out.println("Fields[]: " + fields);
-
-            System.out.println("Field: " + fields[0]);
+             result.put(clasz.getSimpleName(), FieldUtils.getFieldsListWithAnnotation(getClass, FieldMark.class));
 
         }
 
-        return new ArrayList<>();
+        return result;
     }
 }

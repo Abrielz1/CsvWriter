@@ -9,7 +9,7 @@ import org.writer.util.FieldMark;
 
 @Data
 @Builder
-@ClassLabel
+//@ClassLabel
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
