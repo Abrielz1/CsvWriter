@@ -37,6 +37,8 @@ public class CSVParser<T> {
 
             if (entity.getClass().getSimpleName().equals("Person")) {
 
+                int addingNumber = (int) ((Math.random() * 1000000) / 1000);
+
                 Field age = null;
                 Field firstName = null;
                 Field lastName = null;
@@ -65,12 +67,15 @@ public class CSVParser<T> {
                 sb.append(this.extractor(result, temp, entity, dateOfBirth)).append(";");
 
                 head = this.manipulator(sb.toString());
-                writable.writeToFile(result, head, entity.getClass().getSimpleName());
+                writable.writeToFile(result, head, entity.getClass().getSimpleName()
+                        + addingNumber);
                 result.clear();
                 sb.delete(0, sb.length() - 1);
             }
 
             if (entity.getClass().getSimpleName().equals("Student")) {
+
+                int addingNumber = (int) ((Math.random() * 1000000) / 1000);
 
                 Field place = null;
                 Field firstName = null;
@@ -100,12 +105,15 @@ public class CSVParser<T> {
 
                 head = sb.toString();
 
-                writable.writeToFile(result, head, entity.getClass().getSimpleName());
+                writable.writeToFile(result, head, entity.getClass().getSimpleName() + addingNumber);
                 result.clear();
                 sb.delete(0, sb.length() - 1);
             }
 
             if (entity.getClass().getSimpleName().equals("Scores")) {
+
+                int addingNumber = (int) ((Math.random() * 1000000) / 1000);
+
                 Field scores = null;
                 temp = map.get(entity.getClass().getSimpleName());
                 try {
@@ -118,7 +126,7 @@ public class CSVParser<T> {
 
                 head = sb.toString();
 
-            writable.writeToFile(result, head, entity.getClass().getSimpleName());
+            writable.writeToFile(result, head, entity.getClass().getSimpleName() + addingNumber);
             result.clear();
             sb.delete(0, sb.length() - 1);
             }

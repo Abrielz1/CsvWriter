@@ -27,7 +27,7 @@ public class WritableImpl implements Writable {
 
                                                                                  PATH + fileName + END : PATH + FILE)) {
 
-            writer.write(head);
+            writer.append(head);
             writer.append(System.lineSeparator());
 
             for (Object i : data) {

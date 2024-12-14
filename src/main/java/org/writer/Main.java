@@ -34,6 +34,14 @@ public class Main {
                 .dateOfBirth(LocalDate.now().minusYears(15))
                 .build();
 
+        Person person2 = Person
+                .builder()
+                .age(12)
+                .firstName("name2")
+                .lastName("last2")
+                .dateOfBirth(LocalDate.now().minusYears(17))
+                .build();
+
         Student student1 = Student
                 .builder()
                 .place(1)
@@ -58,6 +66,6 @@ public class Main {
         Adapter adapter = new Adapter();
         Writable writable = new WritableImpl();
         CSVParser csvParser = new CSVParser<>(writable, adapter);
-        csvParser.createCSV(res, List.of(person1, student1, scores1));
+        csvParser.createCSV(res, List.of(person1, student1, scores1, person2));
     }
 }
