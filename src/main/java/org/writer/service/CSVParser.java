@@ -78,6 +78,7 @@ public class CSVParser<T> {
                 head = this.manipulator(sb.toString());
                 writable.writeToFile(result, head, entity.getClass().getSimpleName()
                         + addingNumber);
+
                 result.clear();
                 sb.delete(0, sb.length() - 1);
             }
