@@ -46,7 +46,7 @@ public class CSVParser<T> {
 
             if (entity.getClass().getSimpleName().equals("Person")) {
 
-                int addingNumber = (int) ((Math.random() * 1000000) / 1000);
+                int addingNumber = this.randomGenerator();
 
                 Field age = null;
                 Field firstName = null;
@@ -85,7 +85,7 @@ public class CSVParser<T> {
 
             if (entity.getClass().getSimpleName().equals("Student")) {
 
-                int addingNumber = (int) ((Math.random() * 1000000) / 1000);
+                int addingNumber = this.randomGenerator();
 
                 Field place = null;
                 Field firstName = null;
@@ -122,7 +122,7 @@ public class CSVParser<T> {
 
             if (entity.getClass().getSimpleName().equals("Scores")) {
 
-                int addingNumber = (int) ((Math.random() * 1000000) / 1000);
+                int addingNumber = this.randomGenerator();
 
                 Field scores = null;
                 temp = map.get(entity.getClass().getSimpleName());
@@ -197,5 +197,10 @@ public class CSVParser<T> {
         }
 
         return res.toString();
+    }
+
+    private int randomGenerator() {
+
+        return (int) ((Math.random() * 1000000) / 1000);
     }
 }
