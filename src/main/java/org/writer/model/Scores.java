@@ -15,6 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Scores {
 
+    /**
+     * очки
+     */
     @FieldMark
     private List<Integer> scores;
 }

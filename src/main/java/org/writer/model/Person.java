@@ -20,16 +20,27 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Person {
-
+    /**
+     * Возраст
+     */
     @FieldMark
     private int age;
 
+    /**
+     * имя
+      */
     @FieldMark
     private String firstName;
 
+    /**
+     * фамилия
+     */
     @FieldMark
     private String lastName;
 
+    /**
+     * дата рождения
+     */
     @FieldMark
     private LocalDate dateOfBirth;
 }

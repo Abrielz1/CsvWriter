@@ -14,15 +14,27 @@ import org.writer.util.FieldMark;
 @AllArgsConstructor
 public class Student {
 
+    /**
+     * место в рейтинге
+     */
     @FieldMark
     private int place;
 
+    /**
+     * имя
+     */
     @FieldMark
     private String firstName;
 
+    /**
+     * фамилия
+     */
     @FieldMark
     private String lastName;
 
+    /**
+     * очки
+     */
     @FieldMark
     private double score;
 }

@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Класс для поиска и фильтрации полей в классах помеченных аннотацией FieldLabel
+ * @param <T> универсальный тип
+ */
 public class Manipulator<T> {
 
     public Map<String, List<Field>> manipulate(List<Class<?>> classes) {

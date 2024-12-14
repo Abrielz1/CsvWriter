@@ -17,7 +17,6 @@ import java.util.List;
 
 public class Main {
 
-
     @SneakyThrows
     public static void main(String[] args) {
 

@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * класс для записи csv файла
+ */
 @RequiredArgsConstructor
 public class WritableImpl implements Writable {
 
@@ -15,6 +18,12 @@ public class WritableImpl implements Writable {
 
     private static final String FILE = "data.csv";
 
+    /**
+     * Метод для записи на диск csv файла
+     * @param data список сущностей для записи
+     * @param head заголовок
+     * @param fileName имя файла для записи
+     */
     @Override
     public void writeToFile(List<?> data, String head, String fileName) {
 

@@ -6,6 +6,9 @@ import net.sf.corn.cps.ClassFilter;
 import net.sf.corn.cps.PackageNameFilter;
 import java.util.List;
 
+/**
+ * класс для поиска и отсева классов не помеченных аннотацией @ClassLabel
+ */
 @RequiredArgsConstructor
 public class ClassManipulator {
 

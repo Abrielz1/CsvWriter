@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Класс для парсинга и отправки файла на запись
+ * @param <T> универсальный тип
+ */
 @RequiredArgsConstructor
 public class CSVParser<T> {
 
@@ -18,6 +22,11 @@ public class CSVParser<T> {
 
     private final Adapter adapter;
 
+    /**
+     * Метод для создания csv из сущностей и мапы со списком полей для парсинга
+     * @param map содержит поля для парсинга
+     * @param entities список собственно сущностей
+     */
     public void createCSV(Map<String, List<Field>> map, List<T> entities) {
 
         List<String> result = new ArrayList<>();
