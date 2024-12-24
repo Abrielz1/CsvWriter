@@ -1,11 +1,8 @@
 package org.writer.service;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
-import org.writer.util.FieldMark;
-import java.lang.reflect.Field;
-import java.util.HashMap;
+import lombok.SneakyThrows;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Класс для поиска и фильтрации полей в классах помеченных аннотацией FieldLabel
@@ -13,16 +10,12 @@ import java.util.Map;
  */
 public class Manipulator<T> {
 
-    public Map<String, List<Field>> manipulate(List<Class<?>> classes) {
+    @SneakyThrows
+    public List<Object> manipulate(List<Class<?>> classes, Object... objects) {
 
-       Map<String, List<Field>> result = new HashMap<>();
-
-        for (Class<?> getClass : classes) {
-            Class<?> clasz = getClass;
-
-             result.put(clasz.getSimpleName(), FieldUtils.getFieldsListWithAnnotation(getClass, FieldMark.class));
-        }
-
-        return result;
+        return Arrays
+                .stream(objects)
+                .filter(i->classes.contains(i.getClass()))
+                .toList();
     }
 }

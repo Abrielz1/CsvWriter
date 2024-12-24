@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.sf.corn.cps.CPScanner;
 import net.sf.corn.cps.ClassFilter;
 import net.sf.corn.cps.PackageNameFilter;
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClassManipulator {
 
-    public List<Class<?>> classScanner(String path, Class classLabel) {
+    public List<Class<?>> classScanner(String path, Class<? extends Annotation> classLabel) {
 
         List<Class<?>> classes = CPScanner.scanClasses(new PackageNameFilter(path),
                 new ClassFilter().appendAnnotation(classLabel));

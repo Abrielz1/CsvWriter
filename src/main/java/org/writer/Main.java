@@ -4,12 +4,9 @@ import lombok.SneakyThrows;
 import org.writer.model.Person;
 import org.writer.model.Scores;
 import org.writer.model.Student;
-import org.writer.service.CSVParser;
+import org.writer.service.CSVManipulator;
 import org.writer.service.ClassManipulator;
 import org.writer.service.Manipulator;
-import org.writer.service.Writable;
-import org.writer.service.WritableImpl;
-import org.writer.util.Adapter;
 import org.writer.util.ClassLabel;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -58,13 +55,20 @@ public class Main {
 
         Manipulator<Object> manipulator = new Manipulator<>();
 
-     var res = manipulator.manipulate(classManipulator.classScanner("org.writer.model",
-                ClassLabel.class));
+        CSVManipulator csvManipulator = new CSVManipulator();
+
+        List<Object> objects = new ArrayList<>(List.of(person1, person2, student1, scores1));
+
+        csvManipulator.createCSV(manipulator.manipulate(classManipulator.classScanner("org.writer.model", ClassLabel.class), person1), person1.getClass().getSimpleName());
 
 
-        Adapter adapter = new Adapter();
-        Writable writable = new WritableImpl();
-        CSVParser csvParser = new CSVParser<>(writable, adapter);
-        csvParser.createCSV(res, List.of(person1, student1, scores1, person2));
+
+//                ClassLabel.class));
+//
+//
+//        Adapter adapter = new Adapter();
+//        Writable writable = new WritableImpl();
+//        CSVParser csvParser = new CSVParser<>(writable, adapter);
+//        csvParser.createCSV(res, List.of(person1, student1, scores1, person2));
     }
 }
