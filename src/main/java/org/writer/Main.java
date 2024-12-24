@@ -59,7 +59,7 @@ public class Main {
 
         List<Object> objects = new ArrayList<>(List.of(person1, person2, student1, scores1));
 
-        csvManipulator.createCSV(manipulator.manipulate(classManipulator.classScanner("org.writer.model", ClassLabel.class), person1), person1.getClass().getSimpleName());
+        csvManipulator.createCSV(manipulator.manipulate(classManipulator.classScanner("org.writer.model", ClassLabel.class), objects));
 
 
 

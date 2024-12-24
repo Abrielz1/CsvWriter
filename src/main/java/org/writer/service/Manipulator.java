@@ -1,7 +1,6 @@
 package org.writer.service;
 
 import lombok.SneakyThrows;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,10 +10,9 @@ import java.util.List;
 public class Manipulator<T> {
 
     @SneakyThrows
-    public List<Object> manipulate(List<Class<?>> classes, Object... objects) {
+    public List<Object> manipulate(List<Class<?>> classes, List<Object> objects) {
 
-        return Arrays
-                .stream(objects)
+        return objects.stream()
                 .filter(i->classes.contains(i.getClass()))
                 .toList();
     }
