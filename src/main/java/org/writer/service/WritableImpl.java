@@ -34,7 +34,7 @@ public class WritableImpl implements Writable {
 
         try(FileWriter writer = new FileWriter(fileName != null && !fileName.isBlank() ?
 
-                                                                                 PATH + fileName + END : PATH + FILE)) {
+                                                                                 PATH + fileName + END : PATH + FILE, true)) {
 
             writer.append(head);
             writer.append(System.lineSeparator());

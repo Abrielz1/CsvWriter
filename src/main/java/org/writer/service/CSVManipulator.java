@@ -3,7 +3,6 @@ package org.writer.service;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.writer.exception.IllegalCastException;
 import org.writer.util.FieldMark;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class CSVManipulator {
                 try {
                     j.setAccessible(true);
                     values.add(field.get(field.indexOf(j)).get(i).toString());
-                    fileName.append(values.stream().map(c-> c.getClass().getSimpleName()).toList().get(0));
+                 //   fileName.append(values.stream().map(c-> c.getClass().getSimpleName()).toList().get(0));
                 } catch (IllegalAccessException e) {
                     try {
                         throw new IllegalCastException(e.getMessage());
@@ -34,7 +33,6 @@ public class CSVManipulator {
             });
             new WritableImpl().writeToFile(
                     values,
-                    // head.toString(),
                     field.stream().map(Field::getName).collect(Collectors.joining(";")),
                     fileName.toString());
         });
