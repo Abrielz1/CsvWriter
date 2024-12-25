@@ -22,7 +22,7 @@ public class CSVManipulator {
                 try {
                     j.setAccessible(true);
                     values.add(field.get(field.indexOf(j)).get(i).toString());
-                 //   fileName.append(values.stream().map(c-> c.getClass().getSimpleName()).toList().get(0));
+                    fileName.append(values.stream().map(c-> c.getClass().getDeclaredFields()).toList().get(0));
                 } catch (IllegalAccessException e) {
                     try {
                         throw new IllegalCastException(e.getMessage());
