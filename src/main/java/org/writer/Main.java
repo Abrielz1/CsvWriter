@@ -25,8 +25,8 @@ public class Main {
         Person person1 = Person
                          .builder()
                 .age(18)
-                .firstName("name")
-                .lastName("last")
+                .firstName("name1")
+                .lastName("last1")
                 .dateOfBirth(LocalDate.now().minusYears(15))
                 .build();
 
@@ -41,8 +41,8 @@ public class Main {
         Student student1 = Student
                 .builder()
                 .place(1)
-                .firstName("name")
-                .lastName("surename")
+                .firstName("name3")
+                .lastName("surename3")
                 .score(25.9d)
                 .build();
 
@@ -59,9 +59,9 @@ public class Main {
 
         List<Object> objects = new ArrayList<>(List.of(person1, person2, student1, scores1));
 
-        csvManipulator.createCSV(manipulator.manipulate(classManipulator.classScanner("org.writer.model", ClassLabel.class), objects));
+      //  csvManipulator.createCSV(manipulator.manipulate(classManipulator.classScanner("org.writer.model", ClassLabel.class), objects));
 
-
+        csvManipulator.createCSV1(manipulator.manipulator(classManipulator.classScanner("org.writer.model", ClassLabel.class), objects));
 
 //                ClassLabel.class));
 //

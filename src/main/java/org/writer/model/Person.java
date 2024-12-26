@@ -41,6 +41,6 @@ public class Person {
     /**
      * дата рождения
      */
-    @FieldMark
+   // @FieldMark
     private LocalDate dateOfBirth;
 }

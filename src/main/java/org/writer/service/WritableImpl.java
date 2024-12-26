@@ -27,8 +27,9 @@ public class WritableImpl implements Writable {
     @Override
     public void writeToFile(List<?> data, String head, String fileName) {
 
-        if (data == null || data.isEmpty()) {
 
+        if (data == null || data.isEmpty()) {
+            System.out.println("file empty");
             return;
         }
 
@@ -36,8 +37,8 @@ public class WritableImpl implements Writable {
 
                                                                                  PATH + fileName + END : PATH + FILE, true)) {
 
-            writer.append(head);
-            writer.append(System.lineSeparator());
+      //      writer.append(head);
+      //      writer.append(System.lineSeparator());
 
             for (Object i : data) {
 

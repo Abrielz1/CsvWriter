@@ -1,40 +1,41 @@
 package org.writer.service;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
-import org.writer.exception.IllegalCastException;
 import org.writer.util.FieldMark;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Класс для создания csv
  */
 public class CSVManipulator {
 
-    public void createCSV(List<Object> objects) {
-        objects.forEach(i -> {
-            List<Field> field = FieldUtils.getFieldsListWithAnnotation(i.getClass(), FieldMark.class);
+    public void createCSV1(Map<String, Object> objects) {
+
+        objects.forEach((k, v) -> {
+            List<Field> field = FieldUtils.getFieldsListWithAnnotation(objects.get(k).getClass(), FieldMark.class);
             List<String> values = new ArrayList<>();
-            StringBuilder fileName = new StringBuilder();
+            AtomicReference<String> fileName = new AtomicReference<>();
+            AtomicReference<String> head = new AtomicReference<>();
             field.forEach(j -> {
+
                 try {
                     j.setAccessible(true);
-                    values.add(field.get(field.indexOf(j)).get(i).toString());
-                    fileName.append(values.stream().map(c-> c.getClass().getDeclaredFields()).toList().get(0));
-                } catch (IllegalAccessException e) {
-                    try {
-                        throw new IllegalCastException(e.getMessage());
-                    } catch (IllegalCastException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    values.add(field.get(field.indexOf(j)).get(v).toString());
+                    fileName.set(k);
+                } catch (RuntimeException ex) {
+                    throw new RuntimeException(ex);
+
+            } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
                 }
             });
-            new WritableImpl().writeToFile(
-                    values,
-                    field.stream().map(Field::getName).collect(Collectors.joining(";")),
-                    fileName.toString());
+            new WritableImpl().writeToFile(values, "", fileName.get());
+
         });
+
     }
 }
