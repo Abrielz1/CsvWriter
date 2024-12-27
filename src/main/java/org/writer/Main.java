@@ -60,8 +60,8 @@ public class Main {
         List<Object> objects = new ArrayList<>(List.of(person1, person2));
 
       csvManipulator.createCSV(
-              manipulator.manipulate(classManipulator.classScanner("org.writer.model", ClassLabel.class), objects)
-              , "Person");
+              manipulator.manipulate(classManipulator.classScanner("org.writer.model", ClassLabel.class), objects),
+               "Person");
 
     //    csvManipulator.createCSV1(manipulator.manipulator(classManipulator.classScanner("org.writer.model", ClassLabel.class), objects));
 
