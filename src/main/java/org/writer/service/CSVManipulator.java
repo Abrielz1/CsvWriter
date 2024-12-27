@@ -16,15 +16,15 @@ import java.util.stream.Collectors;
 public class CSVManipulator {
 
     public void createCSV(List<Object> objects, String filename) {
+        List<String> values = new ArrayList<>();
+        AtomicReference<String> head = new AtomicReference<>();
         objects.forEach(i -> {
             List<Field> field = FieldUtils.getFieldsListWithAnnotation(i.getClass(), FieldMark.class);
-            List<String> values = new ArrayList<>();
-
+            head.set(this.headCreator(field));
             field.forEach(j -> {
                 try {
                     j.setAccessible(true);
-                    values.add(field.get(field.indexOf(j)).get(i).toString());
-
+                    values.add(field.get(field.indexOf(j)).get(i).toString() + ";");
                 } catch (IllegalAccessException e) {
                     try {
                         throw new IllegalCastException(e.getMessage());
@@ -33,12 +33,13 @@ public class CSVManipulator {
                     }
                 }
             });
-            new WritableImpl().writeToFile(
-                    values,
-                    // head.toString(),
-                    field.stream().map(Field::getName).collect(Collectors.joining(";")),
-                    filename);
+
+            values.add(System.lineSeparator());
         });
+
+        new WritableImpl().writeToFile(
+                values, head.get(),
+                filename);
     }
 
     public void createCSV1(Map<String, Object> objects) {
@@ -65,5 +66,10 @@ public class CSVManipulator {
 
         });
 
+    }
+
+    public String headCreator(List<Field> field) {
+
+        return field.stream().map(Field::getName).collect(Collectors.joining(";"));
     }
 }
